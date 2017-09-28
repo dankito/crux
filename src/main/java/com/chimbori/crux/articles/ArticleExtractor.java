@@ -13,12 +13,18 @@ public class ArticleExtractor {
   private final Document document;
   private final Article article;
 
-  private ArticleExtractor(String url, String html) {
+  public ArticleExtractor(String url, String html) {
     this.url = url;
     if (html.isEmpty()) {
       throw new IllegalArgumentException();
     }
     this.document = Jsoup.parse(html);
+    this.article = new Article(this.url);
+  }
+
+  public ArticleExtractor(String url, Document document) {
+    this.url = url;
+    this.document = document;
     this.article = new Article(this.url);
   }
 
