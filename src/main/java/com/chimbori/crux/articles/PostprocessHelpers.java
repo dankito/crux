@@ -190,7 +190,8 @@ class PostprocessHelpers {
     for (Element childElement : node.children()) {
       removeDisallowedAttributes(childElement);
     }
-    for (Attribute attribute : node.attributes()) {
+
+    for (Attribute attribute : node.attributes().asList()) { // make a copy otherwise it will throw a ConcurrentModificationException
       if (!ATTRIBUTES_TO_RETAIN_IN_HTML.contains(attribute.getKey())) {
         node.removeAttr(attribute.getKey());
       }
