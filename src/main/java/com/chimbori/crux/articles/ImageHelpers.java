@@ -79,8 +79,8 @@ class ImageHelpers {
    * Extracts a set of images from the article content itself. This extraction must be run before
    * the postprocess step, because that step removes tags that are useful for image extraction.
    */
-  static List<Article.Image> extractImages(Element topNode) {
-    List<Article.Image> images = new ArrayList<>();
+  static List<Image> extractImages(Element topNode) {
+    List<Image> images = new ArrayList<>();
     if (topNode == null) {
       return images;
     }
@@ -93,7 +93,7 @@ class ImageHelpers {
     int maxWeight = 0;
     double score = 1;
     for (Element imgElement : imgElements) {
-      Article.Image image = Article.Image.from(imgElement);
+      Image image = Image.from(imgElement);
       if (image.src.isEmpty()) {
         continue;
       }
@@ -130,9 +130,9 @@ class ImageHelpers {
   /**
    * Returns the highest-scored image first.
    */
-  private static class ImageWeightComparator implements Comparator<Article.Image> {
+  private static class ImageWeightComparator implements Comparator<Image> {
     @Override
-    public int compare(Article.Image o1, Article.Image o2) {
+    public int compare(Image o1, Image o2) {
       return o2.weight - o1.weight;
     }
   }

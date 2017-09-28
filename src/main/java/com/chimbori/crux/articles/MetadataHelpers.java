@@ -76,7 +76,7 @@ class MetadataHelpers {
     return doc.select("meta[name=theme-color]").attr("content");
   }
 
-  static String extractImageUrl(Document doc, List<Article.Image> images) {
+  static String extractImageUrl(Document doc, List<Image> images) {
     try {
       return new HeuristicString(null)
           // Twitter Cards and Open Graph images are usually higher quality, so rank them first.
