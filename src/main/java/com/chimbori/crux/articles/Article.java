@@ -46,6 +46,9 @@ public class Article {
   public String feedUrl = "";
   public String faviconUrl = "";
 
+  /**
+   * This is null when article could not get extracted.
+   */
   public Document document;
   public Collection<String> keywords;
   public List<Image> images = new ArrayList<>();
