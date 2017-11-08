@@ -94,13 +94,13 @@ class PostprocessHelpers {
     for (Element brNextToBrElement : topNode.select("br + br")) {
       brNextToBrElement.remove();
     }
+    // TODO: what were the • that good for? Introduces ugly • while removing senseful <br>s
     for (Element brElement : topNode.select("br")) {
       if (brElement.previousSibling() != null) {
-        brElement.previousSibling().after(" • ");
+        brElement.previousSibling().after(" ");
       } else {
-        brElement.parent().append(" • ");
+        brElement.parent().append(" ");
       }
-      brElement.unwrap();
     }
   }
 
