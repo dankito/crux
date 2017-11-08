@@ -6,7 +6,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class ArticleExtractor {
   private final String url;
@@ -52,8 +54,14 @@ public class ArticleExtractor {
     Collection<Element> nodes = ExtractionHelpers.getNodes(document);
     int maxWeight = 0;
     Element bestMatchElement = null;
+    List<Element> highRankedElements = new ArrayList<>();
+
     for (Element element : nodes) {
       int currentWeight = ExtractionHelpers.getWeight(element);
+      if(currentWeight > 50) {
+        highRankedElements.add(element);
+      }
+
       if (currentWeight > maxWeight) {
         maxWeight = currentWeight;
         bestMatchElement = element;
@@ -63,6 +71,9 @@ public class ArticleExtractor {
       }
     }
 
+    // if a lot of high ranked elements have the same parent, then the parent is the node to use as it comprises that high ranked ones
+    bestMatchElement = checkIfHighRankedElementsHaveSameParent(bestMatchElement, highRankedElements);
+
     // Extract images before post-processing, because that step may remove images.
     if(bestMatchElement != null) {
       article.images = ImageHelpers.extractImages(bestMatchElement);
@@ -70,6 +81,25 @@ public class ArticleExtractor {
     }
     article.imageUrl = StringUtils.makeAbsoluteUrl(article.url, MetadataHelpers.extractImageUrl(document, article.images));
     return this;
+  }
+
+  private Element checkIfHighRankedElementsHaveSameParent(Element bestMatchElement, List<Element> highRankedElements) {
+    if(bestMatchElement != null && highRankedElements.size() > 2) {
+      Element parent = bestMatchElement.parent();
+      List<Element> elementsWithSameParent = new ArrayList<>();
+
+      for(Element element : highRankedElements) {
+        if(element.parent() == parent) {
+          elementsWithSameParent.add(element);
+        }
+      }
+
+      if(elementsWithSameParent.size() > 1) {
+        return parent;
+      }
+    }
+
+    return bestMatchElement;
   }
 
   public Article article() {

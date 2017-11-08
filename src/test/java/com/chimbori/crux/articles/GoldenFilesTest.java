@@ -460,7 +460,7 @@ public class GoldenFilesTest {
   @Test
   public void testWikipediaOktoberfest() {
     Article article = extractFromTestFile("https://de.m.wikipedia.org/wiki/Oktoberfest", "wikipedia_oktoberfest.html");
-    assertStartsWith("Das erste Oktoberfest Bearbeiten Anlässlich der Hochzeit zwischen Kronprinz Ludwig und Prinzessin Therese am 12. ", article.document.text());
+    assertStartsWith("Der Titel dieses Artikels ist mehrdeutig. Weitere Bedeutungen sind unter Oktoberfest (Begriffsklärung) aufgeführt. Das Oktoberfest in München (mundartlich Wiesn) ist das größte Volksfest der Welt. Es findet seit 1810 auf der Theresienwiese in der bayerischen Landeshauptstadt München statt.", article.document.text());
   }
 
   @Test
@@ -569,7 +569,8 @@ public class GoldenFilesTest {
     Article article = extractFromTestFile("http://www.scientificamerican.com/article.cfm?id=bpa-semen-quality", "scientificamerican.html");
     assertEquals("Everyday BPA Exposure Decreases Human Semen Quality: Scientific American", article.title);
     assertEquals("http://www.scientificamerican.com/media/inline/bpa-semen-quality_1.jpg", article.imageUrl);
-    assertStartsWith("The common industrial chemical bisphenol A (BPA) ", article.document.text());
+    assertStartsWith("News | Health Everyday BPA Exposure Decreases Human Semen Quality", article.document.text());
+    assertContains("The common industrial chemical bisphenol A (BPA) ", article.document.text());
   }
 
   @Test
@@ -677,6 +678,22 @@ public class GoldenFilesTest {
     assertContains("I had my answer about what the student in the previous session had done.", article.document.text());
     assertContains("…however I have no experience or evidence whether professional academics are using the tools for their scholarly publishing.", article.document.text());
     assertContains("SIDEBAR: How to identify text modified by a paraphrasing tool", article.document.text());
+  }
+
+  @Test
+  public void testSueddeutscheParadisePapers() {
+    Article article = extractFromTestFile("https://projekte.sueddeutsche.de/paradisepapers/politik/der-staat-mischt-in-steueroasen-mit-e315399/", "sueddeutsche_paradise_papers.html");
+    assertEquals("Paradise Papers: Der Staat mischt in Steueroasen mit", article.title);
+    assertEquals("https://projekte.sueddeutsche.de/paradisepapers/politik/der-staat-mischt-in-steueroasen-mit-e315399/_socialMedia_facebook_imagew1200h1200q70-b14e40bb67a7882c.jpg", article.imageUrl);
+    assertStartsWith("Der kleine Ort San Ġiljan auf Malta – wer die Scheinheiligkeit des deutschen Staates besichtigen will, macht sich am besten auf den Weg dorthin. Dort hängt in der Church Street ein Briefkasten", article.document.text());
+    assertContains("Die Flughafengesellschaft hat außerdem eine Firma in der Steueroase Luxemburg registriert, sie ist an einer in der Steueroase Zypern beteiligt und besitzt auf Malta nicht nur eine, sondern gleich drei Briefkästen", article.document.text());
+    assertContains("wie viel der deutsche Staat weltweit durch illegale Steuerhinterziehung und legale Steuervermeidung verliert: 17 Milliarden Euro im Jahr.", article.document.text());
+    assertContains("Auch in den Paradise Papers taucht die HSH Nordbank wieder auf. In einem Konsortium mit anderen Banken ist sie beispielsweise an einem Kredit für eine Reihe von Schiffseignern beteiligt", article.document.text());
+    assertContains("Ein anderes Beispiel: Die Banque LB Lux, eine ehemalige Tochter der Bayern-LB in Luxemburg, wiederum gründete und", article.document.text());
+    assertContains("Unternehmen, die dem Staat gehören oder an denen der Staat beteiligt ist, gründen aber nicht nur Briefkastenfirmen. Wie die Paradise Papers zeigen, nutzen sie sie auch selbst.", article.document.text());
+    assertContains("Fragt man das Bundesfinanzministerium, ob es in Ordnung ist, dass deutsche Staatsunternehmen Schlupflöcher in Steueroasen nutzen, lautet die Antwort: \"Unternehmen (gleich ob in privater oder in öffentlicher Hand)", article.document.text());
+    assertContains("Diese Haltung hat nur zwei Haken: Nicht immer ist eindeutig, welches Steuerschlupfloch legal oder illegal ist. EU-Kommissionspräsident Jean-Claude Juncker etwa verteidigte nach den", article.document.text());
+    assertContains("Zweitens: Ein Staat, der selbst in Steueroasen agiert, sendet - auch wenn alles legal ist - unweigerlich ein Signal: dass Geschäfte in Steueroasen doch gar nicht so problematisch seien.", article.document.text());
   }
 
   private Article extractFromTestFile(String baseUri, String testFile) {
