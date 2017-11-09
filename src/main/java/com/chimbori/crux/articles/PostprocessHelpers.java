@@ -56,7 +56,7 @@ class PostprocessHelpers {
    * will be retained.
    */
   private static final Set<String> ATTRIBUTES_TO_RETAIN_IN_HTML = new HashSet<>(Arrays.asList(
-      "href", "title", "src", "alt", "width", "height", "cellspacing", "cellpadding", "style" // TODO: really keep style?
+      "href", "title", "src", "alt", "width", "height", "cellspacing", "cellpadding"
   ));
 
   /**
