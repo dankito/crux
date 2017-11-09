@@ -44,7 +44,12 @@ class PreprocessHelpers {
 
     Elements noscripts = doc.getElementsByTag("noscript");
     for (Element item : noscripts) {
-      Log.printAndRemove(item, "removeScriptsStylesForms('noscript')");
+      if(item.select("img").size() > 0) { // keep images in noscript elements
+        item.unwrap();
+      }
+      else {
+        Log.printAndRemove(item, "removeScriptsStylesForms('noscript')");
+      }
     }
 
     Elements styles = doc.getElementsByTag("style");
