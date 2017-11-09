@@ -10,6 +10,7 @@ import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
+import java.net.URI;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -83,6 +84,7 @@ class PostprocessHelpers {
     removeTopLevelTagsNotLikelyToBeParagraphs(topNode);
     removeShortParagraphs(topNode);
     removeDisallowedAttributes(topNode);
+    makeUrlsAbsolute(topNode);
 
     for (Node node : topNode.childNodes()) {
       doc.appendChild(node.clone());  // TODO: Don’t copy each item separately.
@@ -211,6 +213,7 @@ class PostprocessHelpers {
     return false;
   }
 
+
   static private boolean isUnlikely(Element element) {
     String styleAttribute = element.attr("style");
     String classAttribute = element.attr("class");
@@ -229,6 +232,71 @@ class PostprocessHelpers {
         node.removeAttr(attribute.getKey());
       }
     }
+  }
+
+
+  private static void makeUrlsAbsolute(Element element) {
+    for(Element hrefElement : element.select("[href]")) {
+        hrefElement.attr("href", makeUrlAbsolute(hrefElement.attr("href"), element.baseUri()));
+    }
+
+    for(Element srcElement : element.select("[src]")) {
+        srcElement.attr("src", makeUrlAbsolute(srcElement.attr("src"), element.baseUri()));
+    }
+  }
+
+
+  private static void makeImageSourceAbsolute(Element imageElement) {
+    String absoluteUrl = makeUrlAbsolute(imageElement.attr("src"), imageElement.baseUri());
+    imageElement.attr("src", absoluteUrl);
+  }
+
+  private static String makeUrlAbsolute(String url, String siteUrl) {
+    String absoluteUrl = url;
+
+    if(url.startsWith("//")) {
+      if(siteUrl.startsWith("https:")) {
+        absoluteUrl = "https:" + url;
+      }
+      else {
+        absoluteUrl = "http:" + url;
+      }
+    }
+    else if(url.startsWith("/") || url.startsWith("http") == false) {
+      String result = tryToMakeUrlAbsolute(url, siteUrl);
+      if(result != null) {
+        absoluteUrl = result;
+      }
+    }
+
+    return absoluteUrl;
+  }
+
+  private static String tryToMakeUrlAbsolute(String relativeUrl, String siteUrl) {
+    try {
+      URI relativeUri = new URI(relativeUrl);
+      if(relativeUri.isAbsolute() && relativeUri.getScheme().startsWith("http") == false) {
+        return relativeUrl; // it's an absolute uri but just doesn't start with http, e.g. mailto: for file:
+      }
+    } catch(Exception ignored) { }
+
+    try {
+      URI uri = new URI(siteUrl);
+      return uri.resolve(relativeUrl).toString();
+    } catch(Exception ignored) { }
+
+    try {
+      URI uri = new URI(siteUrl);
+
+      String port = uri.getPort() > 0 ? ":" + uri.getPort() : "";
+      String separator = relativeUrl.startsWith("/") ? "" : "/";
+
+      String manuallyCreatedUriString = uri.getScheme() + "://" + uri.getHost() + port + separator + relativeUrl;
+      URI manuallyCreatedUri = new URI(manuallyCreatedUriString);
+      return manuallyCreatedUri.toString();
+    } catch(Exception ignored) { }
+
+    return null;
   }
 
 }
