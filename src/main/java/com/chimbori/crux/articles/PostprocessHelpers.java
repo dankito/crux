@@ -39,7 +39,7 @@ class PostprocessHelpers {
    * to the list of tags that callers can be expected to be able to handle.
    */
   private static final Set<String> RETAIN_TAGS = new HashSet<>(Arrays.asList(
-      "p", "b", "i", "u", "strong", "em", "a", "pre", "h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "img"
+      "p", "b", "i", "u", "strong", "em", "a", "pre", "h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "img", "br"
   ));
 
   /**
