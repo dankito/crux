@@ -712,6 +712,11 @@ public class GoldenFilesTest {
         fail(String.format("Extracted text does not match:\n\nActual:\n[%s]\n\n Expected:\n[%s]\n", extractedText, expectedText));
       }
 
+//      BufferedWriter writer = new BufferedWriter(new FileWriter(new File("test_data", testFile.replace(".html", "_extracted.txt"))));
+//      writer.write(extractedText, 0, extractedText.length());
+//      writer.flush();
+//      writer.close();
+
       return article;
     } catch (Exception e) {
       fail(e.getMessage());
