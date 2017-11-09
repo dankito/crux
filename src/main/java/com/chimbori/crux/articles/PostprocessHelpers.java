@@ -28,6 +28,8 @@ class PostprocessHelpers {
 
   private static final Pattern UNLIKELY_CSS_STYLES = Pattern.compile("display\\:none|visibility\\:hidden");
 
+  private static final Pattern UNLIKELY_CLASS_NAMES = Pattern.compile("edit-page|mw-editsection");
+
   /**
    * Tags that should not be output, but still may contain interesting content.
    */
@@ -219,7 +221,7 @@ class PostprocessHelpers {
     String classAttribute = element.attr("class");
     // TODO: why have captions been removed? keeping them for now.
     return UNLIKELY_CSS_STYLES.matcher(styleAttribute).find()
-        || UNLIKELY_CSS_STYLES.matcher(classAttribute).find();
+        || UNLIKELY_CLASS_NAMES.matcher(classAttribute).find();
   }
 
   private static void removeDisallowedAttributes(Element node) {
