@@ -174,7 +174,7 @@ class PostprocessHelpers {
     Elements elementsWithGravityScore = topNode.select(ExtractionHelpers.GRAVITY_SCORE_SELECTOR);
     for (Element element : elementsWithGravityScore) {
       int score = Integer.parseInt(element.attr(ExtractionHelpers.GRAVITY_SCORE_ATTRIBUTE));
-      if (score < 0 || (element.text().length() < MIN_LENGTH_FOR_PARAGRAPHS && isHeading(element) == false && isImage(element) == false)) { // keep headings and images
+      if (score < 0 || (element.text().length() < MIN_LENGTH_FOR_PARAGRAPHS && isHeading(element) == false && containsImage(element) == false)) { // keep headings and images
         Log.printAndRemove(element, "removeNodesWithNegativeScores");
       }
     }
@@ -184,7 +184,7 @@ class PostprocessHelpers {
     return element.tagName().toLowerCase().startsWith("h") && element.tagName().length() == 2;
   }
 
-  private static boolean isImage(Element element) {
+  private static boolean containsImage(Element element) {
     Element imageElement = element.select("img").first();
     if(imageElement != null) {
       return isSmallImage(imageElement) == false;
