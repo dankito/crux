@@ -214,9 +214,9 @@ class PostprocessHelpers {
   static private boolean isUnlikely(Element element) {
     String styleAttribute = element.attr("style");
     String classAttribute = element.attr("class");
-    return classAttribute != null && classAttribute.toLowerCase().contains("caption")
-        || UNLIKELY_CSS_STYLES.matcher(styleAttribute).find()
-        || classAttribute != null && UNLIKELY_CSS_STYLES.matcher(classAttribute).find();
+    // TODO: why have captions been removed? keeping them for now.
+    return UNLIKELY_CSS_STYLES.matcher(styleAttribute).find()
+        || UNLIKELY_CSS_STYLES.matcher(classAttribute).find();
   }
 
   private static void removeDisallowedAttributes(Element node) {
