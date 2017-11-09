@@ -39,8 +39,8 @@ public class GoldenFilesTest {
   public void testYCombinator() {
     Article article = extractFromTestFile("http://paulgraham.com/seesv.html", "ycombinator.html");
     assertStartsWith("Want to start a startup? Get funded by Y Combinator.", article.document.text());
-    assertStartsWith("October 2010 • Silicon Valley proper is mostly suburban sprawl.", article.document.child(1).text());
-    assertTrue(article.document.text(), article.document.text().endsWith(" and Jessica Livingston for reading drafts of this. •"));
+    assertStartsWith("October 2010 Silicon Valley proper is mostly suburban sprawl.", article.document.child(1).text());
+    assertTrue(article.document.text(), article.document.text().endsWith(" and Jessica Livingston for reading drafts of this."));
     assertTrue(article.keywords.isEmpty());
   }
 
