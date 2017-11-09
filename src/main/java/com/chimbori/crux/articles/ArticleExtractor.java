@@ -20,7 +20,7 @@ public class ArticleExtractor {
     if (html.isEmpty()) {
       throw new IllegalArgumentException();
     }
-    this.document = Jsoup.parse(html);
+    this.document = Jsoup.parse(html, url);
     this.article = new Article(this.url);
   }
 
