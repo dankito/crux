@@ -35,7 +35,7 @@ class ExtractionHelpers {
   public static final Pattern NEGATIVE_CSS_CLASSES_AND_IDS =
       Pattern.compile("nav($|igation)|user|com(ment|bx)|(^com-)|contact|"
           + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
-          + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|post-ratings");
+          + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|post-ratings|mw-editsection");
 
   private static final Pattern NEGATIVE_CSS_STYLES =
       Pattern.compile("hidden|display: ?none|font-size: ?small");
