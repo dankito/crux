@@ -7,7 +7,9 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
@@ -702,8 +704,16 @@ public class GoldenFilesTest {
           CharsetConverter.readStream(new FileInputStream(new File("test_data/" + testFile))).content)
           .extractMetadata().extractContent().article();
       Log.i("%s", article.document.childNodes().toString());
+
+      String extractedText = article.document.text();
+
+      String expectedText = new String(Files.readAllBytes(Paths.get("test_data/" + testFile.replace(".html", "_extracted.txt"))), StandardCharsets.UTF_8);
+      if(extractedText.equals(expectedText) == false) {
+        fail(String.format("Extracted text does not match:\n\nActual:\n[%s]\n\n Expected:\n[%s]\n", extractedText, expectedText));
+      }
+
       return article;
-    } catch (FileNotFoundException e) {
+    } catch (Exception e) {
       fail(e.getMessage());
       return null;
     }
