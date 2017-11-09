@@ -39,7 +39,7 @@ class PostprocessHelpers {
    * to the list of tags that callers can be expected to be able to handle.
    */
   private static final Set<String> RETAIN_TAGS = new HashSet<>(Arrays.asList(
-      "p", "b", "i", "u", "strong", "em", "a", "pre", "h1", "h2", "h3", "h4", "h5", "h6", "blockquote"
+      "p", "b", "i", "u", "strong", "em", "a", "pre", "h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "img"
   ));
 
   /**
@@ -172,7 +172,7 @@ class PostprocessHelpers {
     Elements elementsWithGravityScore = topNode.select(ExtractionHelpers.GRAVITY_SCORE_SELECTOR);
     for (Element element : elementsWithGravityScore) {
       int score = Integer.parseInt(element.attr(ExtractionHelpers.GRAVITY_SCORE_ATTRIBUTE));
-      if (score < 0 || (element.text().length() < MIN_LENGTH_FOR_PARAGRAPHS && isHeading(element) == false)) { // keep headings
+      if (score < 0 || (element.text().length() < MIN_LENGTH_FOR_PARAGRAPHS && isHeading(element) == false && isImage(element) == false)) { // keep headings and images
         Log.printAndRemove(element, "removeNodesWithNegativeScores");
       }
     }
@@ -180,6 +180,35 @@ class PostprocessHelpers {
 
   private static boolean isHeading(Element element) {
     return element.tagName().toLowerCase().startsWith("h") && element.tagName().length() == 2;
+  }
+
+  private static boolean isImage(Element element) {
+    Element imageElement = element.select("img").first();
+    if(imageElement != null) {
+      return isSmallImage(imageElement) == false;
+    }
+
+    return false;
+  }
+
+  private static boolean isSmallImage(Element image) {
+    try {
+      if(image.attr("width").length() > 0) {
+        int width = Integer.parseInt(image.attr("width"));
+        if(width < 20) {
+          return true;
+        }
+      }
+
+      if(image.attr("height").length() > 0) {
+        int height = Integer.parseInt(image.attr("height"));
+        if(height < 20) {
+          return true;
+        }
+      }
+    } catch(Exception ignored) { }
+
+    return false;
   }
 
   static private boolean isUnlikely(Element element) {
