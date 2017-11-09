@@ -97,7 +97,7 @@ public class GoldenFilesTest {
   public void testCaltonCaldwell() {
     Article article = extractFromTestFile("http://daltoncaldwell.com/dear-mark-zuckerberg", "daltoncaldwell.html");
     assertEquals("Dear Mark Zuckerberg by Dalton Caldwell", article.title);
-    assertStartsWith("On June 13, 2012, at 4:30 p.m., I attended a meeting at Facebook HQ in Menlo Park, California.", article.document.text());
+    assertStartsWith("Dear Mark Zuckerberg On June 13, 2012, at 4:30 p.m., I attended a meeting at Facebook HQ in Menlo Park, California", article.document.text());
   }
 
   @Test
@@ -145,7 +145,7 @@ public class GoldenFilesTest {
   @Test
   public void testSpiegel() {
     Article article = extractFromTestFile("http://www.spiegel.de/netzwelt/gadgets/retro-pc-commodore-reaktiviert-den-c64-a-755090.html", "spiegel.html");
-    assertStartsWith("Da ist er wieder, der C64: Eigentlich längst ein Relikt der Technikgeschichte, soll der ", article.document.text());
+    assertStartsWith("Retro-PC Commodore reaktiviert den C64 Da ist er wieder, der C64: Eigentlich längst ein Relikt der Technikgeschichte, soll der ", article.document.text());
   }
 
   @Test
@@ -197,7 +197,7 @@ public class GoldenFilesTest {
   @Test
   public void testTazBlog() {
     Article article = extractFromTestFile("http://www.taz.de/1/politik/asien/artikel/1/anti-atomkraft-nein-danke/", "taz.html");
-    assertStartsWith("Protestkultur in Japan nach der Katastrophe Absolute Minderheit: Im Shiba-Park in Tokio", article.document.text());
+    assertStartsWith("Protestkultur in Japan nach der Katastrophe Anti-Atomkraft? Nein danke! Absolute Minderheit: Im Shiba-Park in Tokio", article.document.text());
     assertEquals("Protestkultur in Japan nach der Katastrophe: Anti-Atomkraft? Nein danke! - taz.de", article.title);
   }
 
@@ -518,7 +518,7 @@ public class GoldenFilesTest {
   @Test
   public void testI4Online() {
     Article article = extractFromTestFile("https://i4online.com", "i4online.html");
-    assertStartsWith("Just one week to go and everything is set for the summer Forum 2013", article.document.text());
+    assertStartsWith("Upcoming events: Forum 79 Just one week to go and everything is set for the summer Forum 2013", article.document.text());
   }
 
   @Test
