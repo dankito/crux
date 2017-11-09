@@ -51,7 +51,7 @@ public class GoldenFilesTest {
     Article article = extractFromTestFile("http://blog.traindom.com/places-where-to-submit-your-startup-for-coverage/", "traindom.html");
     assertEquals("36 places where you can submit your startup for some coverage", article.title);
     assertEquals(Arrays.asList("blog coverage", "get coverage", "startup review", "startups", "submit startup"), article.keywords);
-    assertStartsWith("So you have a new startup company and want some coverage", article.document.text());
+    assertStartsWith("Photo used under Creative Commons from theparadigmshifter So you have a new startup company and want some coverage", article.document.text());
   }
 
   @Test
@@ -76,7 +76,7 @@ public class GoldenFilesTest {
     assertEquals("BBC News", article.siteName);
     assertEquals("Baby born on Mediterranean rescue ship", article.title);
     assertEquals("http://ichef.bbci.co.uk/news/999/cpsprodpb/146E6/production/_91168638_baby070012-9-20162-1photocreditalvawhitemsf.jpg", article.imageUrl);
-    assertStartsWith("A Nigerian woman has given birth to a boy on board a rescue ship in the Mediterranean after being plucked from an overcrowded rubber dinghy.", article.document.text());
+    assertStartsWith("Image caption The baby's father told the BBC he was feeling very lucky A Nigerian woman has given birth to a boy on board a rescue ship in the Mediterranean after being plucked from an overcrowded rubber dinghy.", article.document.text());
   }
 
   @Test
@@ -162,7 +162,7 @@ public class GoldenFilesTest {
   public void testTwitpic() {
     Article article = extractFromTestFile("http://twitpic.com/4k1ku3", "twitpic.html");
     assertEquals("It’s hard to be a dinosaur. on Twitpic", article.title);
-    assertStartsWith("Lazypicture from youtube made a video about this book! It cracked me up!!", article.document.text());
+    assertStartsWith("64 Comments Lazypicture from youtube made a video about this book! It cracked me up!!", article.document.text());
   }
 
   @Test
@@ -227,7 +227,7 @@ public class GoldenFilesTest {
     Article article = extractFromTestFile("http://dealbook.nytimes.com/2011/04/11/for-defense-in-galleon-trial-no-time-to-rest/", "nyt.html");
     assertEquals("DealBook", article.siteName);
     assertEquals("http://graphics8.nytimes.com/images/2011/04/12/business/dbpix-raj-rajaratnam-1302571800091/dbpix-raj-rajaratnam-1302571800091-tmagSF.jpg", article.imageUrl);
-    assertStartsWith("I wouldn’t want to be Raj Rajaratnam’s lawyer right now.", article.document.text());
+    assertStartsWith("Brendan Mcdermid/Reuters Raj Rajaratnam, right, and his lawyer, John Dowd, leaving court on Monday. I wouldn’t want to be Raj Rajaratnam’s lawyer right now.", article.document.text());
   }
 
   @Test
@@ -441,7 +441,7 @@ public class GoldenFilesTest {
   public void testWikipedia() {
     Article article = extractFromTestFile("http://en.wikipedia.org/wiki/Therapsids", "wikipedia.html");
     assertStartsWith("Therapsida is a group of the most advanced reptile-grade synapsids, and the ancestors of mammals", article.document.text());
-    assertStartsWith("<b>Therapsida</b> is a group of the most advanced reptile-grade <a href=\"/wiki/Synapsid\">synapsids</a>", article.document.child(0).html());
+    assertStartsWith("<b>Therapsida</b> is a group of the most advanced reptile-grade <a href=\"http://en.wikipedia.org/wiki/Synapsid\" title=\"Synapsid\">synapsids</a>", article.document.child(0).html());
     assertEquals("http://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Pristeroognathus_DB.jpg/240px-Pristeroognathus_DB.jpg", article.imageUrl);
     assertEquals("http://en.wikipedia.org/apple-touch-icon.png", article.faviconUrl);
   }
@@ -462,7 +462,7 @@ public class GoldenFilesTest {
   @Test
   public void testWikipediaOktoberfest() {
     Article article = extractFromTestFile("https://de.m.wikipedia.org/wiki/Oktoberfest", "wikipedia_oktoberfest.html");
-    assertStartsWith("Der Titel dieses Artikels ist mehrdeutig. Weitere Bedeutungen sind unter Oktoberfest (Begriffsklärung) aufgeführt. Das Oktoberfest in München (mundartlich Wiesn) ist das größte Volksfest der Welt. Es findet seit 1810 auf der Theresienwiese in der bayerischen Landeshauptstadt München statt.", article.document.text());
+    assertStartsWith("Der Titel dieses Artikels ist mehrdeutig. Weitere Bedeutungen sind unter Oktoberfest (Begriffsklärung) aufgeführt. Theresienwiese einen Tag vor der Eröffnung des Oktoberfests 2006 Eine Kellnerin mit drei Maß Hacker-Pschorr, eines der traditionellen Biere auf dem Oktoberfest. Sie trägt ein bayrisches Dirndl. Das Oktoberfest in München (mundartlich Wiesn) ist das größte Volksfest der Welt. Es findet seit 1810 auf der Theresienwiese in der bayerischen Landeshauptstadt München statt.", article.document.text());
   }
 
   @Test
@@ -484,7 +484,7 @@ public class GoldenFilesTest {
   public void testBloomberg() {
     Article article = extractFromTestFile("http://www.bloomberg.com/news/2010-11-01/china-becomes-boss-in-peru-on-50-billion-mountain-bought-for-810-million.html", "bloomberg.html");
     assertEquals("Bloomberg", article.siteName);
-    assertStartsWith("The Chinese entrepreneur and the Peruvian shopkeeper", article.document.text());
+    assertStartsWith("“As long as the government supports us, there is great opportunity,” Li Shiping, owner of the Yuanhua smelter says. “To be honest, making money is easy.”", article.document.text());
     assertEquals("http://www.bloomberg.com/apps/data?pid=avimage&iid=iimODmqjtcQU", article.imageUrl);
   }
 
@@ -534,7 +534,7 @@ public class GoldenFilesTest {
   public void testWashingtonPost() {
     Article article = extractFromTestFile("https://www.washingtonpost.com/lifestyle/style/the-nearly-forgotten-story-of-the-black-women-who-helped-land-a-man-on-the-moon/2016/09/12/95f2d356-7504-11e6-8149-b8d05321db62_story.html", "washingtonpost.html");
     assertEquals("The nearly forgotten story of the black women who helped land a man on the moon - The Washington Post", article.title);
-    assertStartsWith("In 2011, Mary Gainer was a historic preservationist for NASA, and she stumbled on a 1943 picture of a thousand people standing in a huge building.", article.document.text());
+    assertStartsWith("Katherine G. Johnson (Taraji P. Henson) in gray, flanked by fellow mathematicians Dorothy Vaughan (Octavia Spencer), left, and Mary Jackson (Janelle Monáe), meets the man they helped send into orbit, John Glenn (Glen Powell) in the upcoming movie “Hidden Figures.” (Hopper Stone/SMPSP/Twentieth Century Fox) In 2011, Mary Gainer was a historic preservationist for NASA, and she stumbled on a 1943 picture of a thousand people standing in a huge building.", article.document.text());
     assertEquals("https://img.washingtonpost.com/rf/image_1484w/2010-2019/WashingtonPost/2016/09/09/Style/Images/hidden-figures-DF-04856_R2_rgb.jpg", article.imageUrl);
   }
 
@@ -578,7 +578,7 @@ public class GoldenFilesTest {
   @Test
   public void testUniverseToday() {
     Article article = extractFromTestFile("http://www.universetoday.com/76881/podcast-more-from-tony-colaprete-on-lcross/", "universetoday.html");
-    assertStartsWith("I had the chance to interview LCROSS", article.document.text());
+    assertStartsWith("Artist concept of the Centaur and LCROSS heading towards the Moon. Credit: NASA I had the chance to interview LCROSS", article.document.text());
     assertEquals("http://www.universetoday.com/wp-content/uploads/2009/10/lcross-impact_01_01.jpg",
         article.imageUrl);
     assertEquals("Podcast: More From Tony Colaprete on LCROSS", article.title);
