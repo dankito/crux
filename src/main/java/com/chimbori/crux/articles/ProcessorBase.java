@@ -14,9 +14,11 @@ public abstract class ProcessorBase {
   protected boolean shouldKeepShortParagraph(Node node) {
     if(node instanceof Element) {
       Element childElement = (Element) node;
-      if(ExtractionHelpers.POSITIVE_CSS_CLASSES_AND_IDS.matcher(childElement.className() + " " + childElement.id()).find() &&
-          ExtractionHelpers.UNLIKELY_CSS_CLASSES_AND_IDS.matcher(childElement.className() + " " + childElement.id()).find() == false &&
-          ExtractionHelpers.NEGATIVE_CSS_CLASSES_AND_IDS.matcher(childElement.className() + " " + childElement.id()).find() == false) {
+      String classNameAndId = childElement.className() + " " + childElement.id();
+
+      if(ExtractionHelpers.POSITIVE_CSS_CLASSES_AND_IDS.matcher(classNameAndId).find() &&
+          ExtractionHelpers.UNLIKELY_CSS_CLASSES_AND_IDS.matcher(classNameAndId).find() == false &&
+          ExtractionHelpers.NEGATIVE_CSS_CLASSES_AND_IDS.matcher(classNameAndId).find() == false) {
         return true;
       }
     }
