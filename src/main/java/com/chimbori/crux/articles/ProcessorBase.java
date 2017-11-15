@@ -48,14 +48,14 @@ public abstract class ProcessorBase {
     try {
       if(image.attr("width").length() > 0) {
         int width = Integer.parseInt(image.attr("width"));
-        if(width < 20) {
+        if(width < 33) {
           return true;
         }
       }
 
       if(image.attr("height").length() > 0) {
         int height = Integer.parseInt(image.attr("height"));
-        if(height < 20) {
+        if(height < 33) {
           return true;
         }
       }

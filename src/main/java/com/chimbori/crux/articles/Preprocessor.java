@@ -10,7 +10,7 @@ import org.jsoup.select.Elements;
 /**
  * Performs basic sanitization before starting the extraction process.
  */
-public class Preprocessor {
+public class Preprocessor extends ProcessorBase {
 
   public void preprocess(Element bodyElement, PreprocessorOptions options) {
     Log.i("preprocess");
@@ -36,7 +36,7 @@ public class Preprocessor {
     for(Element child : element.select("*")) {
       String classNameAndId = child.className().toLowerCase() + " " + child.id().toLowerCase();
       if(ExtractionHelpers.NEGATIVE_CSS_CLASSES_AND_IDS.matcher(classNameAndId).find() &&
-          ExtractionHelpers.POSITIVE_CSS_CLASSES_AND_IDS.matcher(classNameAndId).find() == false) {
+          ExtractionHelpers.POSITIVE_CSS_CLASSES_AND_IDS.matcher(classNameAndId).find() == false && containsImage(child) == false) {
         Log.printAndRemove(child, "stripUnlikelyCandidates");
       }
     }
