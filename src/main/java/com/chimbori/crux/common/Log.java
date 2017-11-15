@@ -5,7 +5,7 @@ import org.jsoup.nodes.Node;
 public class Log {
   private static final boolean DEBUG = false;
 
-  private static final boolean TRUNCATE = true;
+  private static final boolean TRUNCATE = false;
 
   public static void i(String message, Object... args) {
     if (DEBUG) {
