@@ -3,7 +3,6 @@ package com.chimbori.crux.articles;
 import com.chimbori.crux.articles.model.PreprocessorOptions;
 import com.chimbori.crux.common.Log;
 
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
@@ -13,19 +12,19 @@ import org.jsoup.select.Elements;
  */
 public class Preprocessor {
 
-  public void preprocess(Document doc, PreprocessorOptions options) {
+  public void preprocess(Element bodyElement, PreprocessorOptions options) {
     Log.i("preprocess");
 
     if(options.isStripUnlikelyCandidates()) {
-      stripUnlikelyCandidates(doc);
+      stripUnlikelyCandidates(bodyElement);
     }
 
     if(options.isRemoveScriptsStylesForms()) {
-      removeScriptsStylesForms(doc);
+      removeScriptsStylesForms(bodyElement);
     }
 
     if(options.isRemoveComments()) {
-      removeComments(doc.body());
+      removeComments(bodyElement);
     }
   }
 
@@ -33,8 +32,8 @@ public class Preprocessor {
    * Removes unlikely candidates from HTML. It often ends up removing more than just the unlikely
    * candidates, so exercise caution when enabling this.
    */
-  protected void stripUnlikelyCandidates(Document doc) {
-    for (Element child : doc.select("body").select("*")) {
+  protected void stripUnlikelyCandidates(Element element) {
+    for (Element child : element.select("*")) {
       String classNameAndId = child.className().toLowerCase() + " " + child.id().toLowerCase();
       if (ExtractionHelpers.NEGATIVE_CSS_CLASSES_AND_IDS.matcher(classNameAndId).find()) {
         Log.printAndRemove(child, "stripUnlikelyCandidates");
@@ -42,13 +41,13 @@ public class Preprocessor {
     }
   }
 
-  protected void removeScriptsStylesForms(Document doc) {
-    Elements scripts = doc.getElementsByTag("script");
+  protected void removeScriptsStylesForms(Element element) {
+    Elements scripts = element.getElementsByTag("script");
     for (Element item : scripts) {
       Log.printAndRemove(item, "removeScriptsStylesForms('script')");
     }
 
-    Elements noscripts = doc.getElementsByTag("noscript");
+    Elements noscripts = element.getElementsByTag("noscript");
     for (Element item : noscripts) {
       if(item.select("img").size() > 0) { // keep images in noscript elements
         item.unwrap();
@@ -58,12 +57,12 @@ public class Preprocessor {
       }
     }
 
-    Elements styles = doc.getElementsByTag("style");
+    Elements styles = element.getElementsByTag("style");
     for (Element item : styles) {
       Log.printAndRemove(item, "removeScriptsStylesForms('style')");
     }
 
-    Elements forms = doc.getElementsByTag("form");
+    Elements forms = element.getElementsByTag("form");
     for (Element item : forms) {
       Log.printAndRemove(item, "removeScriptsStylesForms('form')");
     }

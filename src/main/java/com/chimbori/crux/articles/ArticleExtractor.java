@@ -53,9 +53,10 @@ public class ArticleExtractor {
   }
 
   public ArticleExtractor extractContent() {
-    preprocessor.preprocess(document, new PreprocessorOptions());
+    Element bodyElement = document.body().clone();
+    preprocessor.preprocess(bodyElement, new PreprocessorOptions());
 
-    Element bestMatchElement = getBestMatchElement();
+    Element bestMatchElement = getBestMatchElement(bodyElement);
 
     // Extract images before post-processing, because that step may remove images.
     if(bestMatchElement != null) {
@@ -68,8 +69,8 @@ public class ArticleExtractor {
     return this;
   }
 
-  protected Element getBestMatchElement() {
-    Collection<Element> nodes = ExtractionHelpers.getNodes(document);
+  protected Element getBestMatchElement(Element bodyElement) {
+    Collection<Element> nodes = ExtractionHelpers.getNodes(bodyElement);
     int maxWeight = 0;
     Element bestMatchElement = null;
     List<Element> highRankedElements = new ArrayList<>();

@@ -2,7 +2,6 @@ package com.chimbori.crux.articles;
 
 import com.chimbori.crux.common.StringUtils;
 
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.util.ArrayList;
@@ -184,10 +183,10 @@ class ExtractionHelpers {
   /**
    * @return a set of all important nodes
    */
-  static Collection<Element> getNodes(Document doc) {
+  static Collection<Element> getNodes(Element element) {
     Map<Element, Object> nodes = new LinkedHashMap<>(64);
     int score = 100;
-    for (Element el : doc.select("body").select("*")) {
+    for (Element el : element.select("*")) {
       if (IMPORTANT_NODES.matcher(el.tagName()).matches()) {
         nodes.put(el, null);
         setScore(el, score);
