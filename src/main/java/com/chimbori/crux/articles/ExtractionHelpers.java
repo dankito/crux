@@ -23,19 +23,20 @@ class ExtractionHelpers {
       Pattern.compile("p|div|td|h1|h2|article|section");
 
   private static final Pattern UNLIKELY_CSS_CLASSES_AND_IDS =
-      Pattern.compile("com(bx|ment|munity)|dis(qus|cuss)|e(xtra|[-]?mail)|foot|"
-          + "header|menu|re(mark|ply)|rss|sh(are|outbox)|sponsor"
-          + "a(d|ll|gegate|rchive|ttachment)|(pag(er|ination))|popup|print|"
-          + "login|si(debar|gn|ngle)|facebook|twitter|email");
+      Pattern.compile("banner|breadcrumbs|combx|comment|community|cover-wrap|disqus|discuss|e[-]?mail|extra|"
+          + "foot|header|legends|menu|modal|related|remark|reply|replies|rss|share|shoutbox|sidebar|skyscraper|"
+          + "social|sponsor|supplemental|ad|ad-break|all|agegate|archive|attachment|pagination|pager|popup|print|"
+          + "sign|single|facebook|twitter|yom-remote");
 
   private static final Pattern POSITIVE_CSS_CLASSES_AND_IDS =
       Pattern.compile("(^(body|content|h?entry|main|page|post|text|blog|story|haupt))"
-          + "|arti(cle|kel)|instapaper_body");
+          + "|arti(cle|kel)|instapaper_body|h-entry|pagination");
 
   public static final Pattern NEGATIVE_CSS_CLASSES_AND_IDS =
-      Pattern.compile("nav($|igation)|user|com(ment|bx)|(^com-)|contact|"
-          + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
-          + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|post-ratings");
+      Pattern.compile("nav($|igation)|user|(^com-)|"
+          + "hidden|^hid$| hid$| hid |^hid |banner|combx|comment|com-|contact|foot|footer|footnote|"
+          + "masthead|media|meta|modal|outbrain|promo|related|scroll|share|shoutbox|sidebar|skyscraper|"
+          + "sponsor|shopping|tags|tool|widget|player|disclaimer|toc|infobox|vcard|post-ratings");
 
   private static final Pattern NEGATIVE_CSS_STYLES =
       Pattern.compile("hidden|display: ?none|font-size: ?small");
