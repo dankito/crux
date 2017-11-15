@@ -84,7 +84,7 @@ public class GoldenFilesTest {
     Article article = extractFromTestFile("http://www.reuters.com/article/us-knightcapital-trading-technology-idUSBRE87203X20120803", "reuters.html");
     assertEquals("Knight trading loss shows cracks in equity markets", article.title);
     assertEquals("http://s1.reutersmedia.net/resources/r/?m=02&d=20120803&t=2&i=637797752&w=130&fh=&fw=&ll=&pl=&r=CBRE872074Y00", article.imageUrl);
-    assertStartsWith("Knight trading loss shows cracks in equity markets Knight's future in balance after trading disaster", article.document.text());
+    assertStartsWith("Knight trading loss shows cracks in equity markets Related News Knight's future in balance after trading disaster", article.document.text());
   }
 
   @Test
@@ -162,14 +162,14 @@ public class GoldenFilesTest {
   public void testTwitpic() {
     Article article = extractFromTestFile("http://twitpic.com/4k1ku3", "twitpic.html");
     assertEquals("It’s hard to be a dinosaur. on Twitpic", article.title);
-    assertStartsWith("64 Comments Lazypicture from youtube made a video about this book! It cracked me up!!", article.document.text());
+    assertStartsWith("@TheEllenShow 64 Comments 1 2 3 4 Next Lazypicture from youtube made a video about this book! It cracked me up!!", article.document.text());
   }
 
   @Test
   public void testTwitpic2() {
     Article article = extractFromTestFile("http://twitpic.com/4kuem8", "twitpic2.html");
     assertEquals("*Not* what you want to see on the fetal monitor when your wif... on Twitpic", article.title);
-    assertStartsWith("*Not* what you want to see on the fetal monitor when your wife begins to push.", article.document.text());
+    assertStartsWith("@mattmight *Not* what you want to see on the fetal monitor when your wife begins to push.", article.document.text());
   }
 
   @Test
@@ -440,8 +440,8 @@ public class GoldenFilesTest {
   @Test
   public void testWikipedia() {
     Article article = extractFromTestFile("http://en.wikipedia.org/wiki/Therapsids", "wikipedia.html");
-    assertStartsWith("Therapsida is a group of the most advanced reptile-grade synapsids, and the ancestors of mammals", article.document.text());
-    assertStartsWith("<b>Therapsida</b> is a group of the most advanced reptile-grade <a href=\"http://en.wikipedia.org/wiki/Synapsid\" title=\"Synapsid\">synapsids</a>", article.document.child(0).html());
+    assertStartsWith("Illustration of Pristerognathus, a cat-sized therocephalian therapsid", article.document.text());
+    assertContains("Therapsida is a group of the most advanced reptile-grade synapsids, and the ancestors of mammals", article.document.text());
     assertEquals("http://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Pristeroognathus_DB.jpg/240px-Pristeroognathus_DB.jpg", article.imageUrl);
     assertEquals("http://en.wikipedia.org/apple-touch-icon.png", article.faviconUrl);
   }
@@ -463,6 +463,12 @@ public class GoldenFilesTest {
   public void testWikipediaOktoberfest() {
     Article article = extractFromTestFile("https://de.m.wikipedia.org/wiki/Oktoberfest", "wikipedia_oktoberfest.html");
     assertStartsWith("Der Titel dieses Artikels ist mehrdeutig. Weitere Bedeutungen sind unter Oktoberfest (Begriffsklärung) aufgeführt. Theresienwiese einen Tag vor der Eröffnung des Oktoberfests 2006 Eine Kellnerin mit drei Maß Hacker-Pschorr, eines der traditionellen Biere auf dem Oktoberfest. Sie trägt ein bayrisches Dirndl. Das Oktoberfest in München (mundartlich Wiesn) ist das größte Volksfest der Welt. Es findet seit 1810 auf der Theresienwiese in der bayerischen Landeshauptstadt München statt.", article.document.text());
+  }
+
+  @Test
+  public void testWikipediaAustralien() {
+    Article article = extractFromTestFile("hhttps://de.wikipedia.org/wiki/Australien", "wikipedia_australien.html");
+    assertStartsWith("Der Titel dieses Artikels ist mehrdeutig. Weitere Bedeutungen sind unter Australien (Begriffsklärung) aufgeführt. Commonwealth of Australia", article.document.text());
   }
 
   @Test
@@ -541,7 +547,7 @@ public class GoldenFilesTest {
   @Test
   public void testBoingBoing() {
     Article article = extractFromTestFile("http://www.boingboing.net/2010/08/18/dr-laura-criticism-o.html", "boingboing.html");
-    assertStartsWith("Dr. Laura: criticism of me infringes my first amendment rights Dr. Laura Schlessinger is leaving radio to regain her \"first amendment\" rights on the internet.", article.document.text());
+    assertStartsWith("Dr. Laura: criticism of me infringes my first amendment rights From the Boing Boing Shop Popular Posts Follow Us Twitter / Facebook / RSS Dr. Laura Schlessinger is leaving radio to regain her \"first amendment\" rights on the internet.", article.document.text());
   }
 
   @Test
@@ -562,7 +568,7 @@ public class GoldenFilesTest {
   @Test
   public void testSfGate() {
     Article article = extractFromTestFile("http://www.sfgate.com/business/article/Foreclosure-activity-dips-in-California-Bay-Area-3248321.php", "sfgate.html");
-    assertStartsWith("Fewer homes in California and", article.document.text());
+    assertStartsWith("http://www.sfgate.com/business/article/Foreclosure-activity-dips-in-California-Bay-Area-3248321.php Foreclosure activity dips in California, Bay Area MORTGAGE MELTDOWN Published 4:00 am, Wednesday, October 27, 2010 Fewer homes in California and", article.document.text());
     assertEquals("http://ww4.hdnux.com/photos/11/11/11/2396767/11/rawImage.jpg", article.imageUrl);
   }
 
@@ -707,18 +713,15 @@ public class GoldenFilesTest {
 
       String extractedText = article.document.text();
 
-      String expectedText = new String(Files.readAllBytes(Paths.get("test_data/" + testFile.replace(".html", "_extracted.txt"))), StandardCharsets.UTF_8);
+      String expectedText = new String(Files.readAllBytes(Paths.get("test_data/" + testFile.replace(".html", "-expected.txt"))), StandardCharsets.UTF_8);
+
       if(extractedText.equals(expectedText) == false) {
         fail(String.format("Extracted text does not match:\n\nActual:\n[%s]\n\n Expected:\n[%s]\n", extractedText, expectedText));
       }
 
-//      BufferedWriter writer = new BufferedWriter(new FileWriter(new File("test_data", testFile.replace(".html", "_extracted.txt"))));
-//      writer.write(extractedText, 0, extractedText.length());
-//      writer.flush();
-//      writer.close();
-
       return article;
     } catch (Exception e) {
+      e.printStackTrace();
       fail(e.getMessage());
       return null;
     }
