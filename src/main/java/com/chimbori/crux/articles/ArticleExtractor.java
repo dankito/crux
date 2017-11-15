@@ -16,6 +16,9 @@ public class ArticleExtractor {
   private final Document document;
   private final Article article;
 
+  private Preprocessor preprocessor = new Preprocessor();
+
+
   public ArticleExtractor(String url, String html) {
     this.url = url;
     if (html.isEmpty()) {
@@ -50,7 +53,7 @@ public class ArticleExtractor {
   }
 
   public ArticleExtractor extractContent() {
-    PreprocessHelpers.preprocess(document, new PreprocessorOptions());
+    preprocessor.preprocess(document, new PreprocessorOptions());
 
     Collection<Element> nodes = ExtractionHelpers.getNodes(document);
     int maxWeight = 0;
