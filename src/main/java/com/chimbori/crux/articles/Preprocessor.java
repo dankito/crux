@@ -11,9 +11,9 @@ import org.jsoup.select.Elements;
 /**
  * Performs basic sanitization before starting the extraction process.
  */
-class PreprocessHelpers {
+public class Preprocessor {
 
-  static void preprocess(Document doc, PreprocessorOptions options) {
+  public void preprocess(Document doc, PreprocessorOptions options) {
     Log.i("preprocess");
 
     if(options.isStripUnlikelyCandidates()) {
@@ -33,7 +33,7 @@ class PreprocessHelpers {
    * Removes unlikely candidates from HTML. It often ends up removing more than just the unlikely
    * candidates, so exercise caution when enabling this.
    */
-  private static void stripUnlikelyCandidates(Document doc) {
+  protected void stripUnlikelyCandidates(Document doc) {
     for (Element child : doc.select("body").select("*")) {
       String classNameAndId = child.className().toLowerCase() + " " + child.id().toLowerCase();
       if (ExtractionHelpers.NEGATIVE_CSS_CLASSES_AND_IDS.matcher(classNameAndId).find()) {
@@ -42,7 +42,7 @@ class PreprocessHelpers {
     }
   }
 
-  private static void removeScriptsStylesForms(Document doc) {
+  protected void removeScriptsStylesForms(Document doc) {
     Elements scripts = doc.getElementsByTag("script");
     for (Element item : scripts) {
       Log.printAndRemove(item, "removeScriptsStylesForms('script')");
@@ -69,7 +69,7 @@ class PreprocessHelpers {
     }
   }
 
-  private static void removeComments(Node node) {
+  protected void removeComments(Node node) {
     for (int i = 0; i < node.childNodes().size();) {
       Node child = node.childNode(i);
       if (child.nodeName().equals("#comment"))
