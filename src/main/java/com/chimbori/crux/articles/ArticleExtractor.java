@@ -90,7 +90,7 @@ public class ArticleExtractor {
       List<Element> elementsWithSameParent = new ArrayList<>();
 
       for(Element element : highRankedElements) {
-        if(element.parent() == parent) {
+        if(element.parent() == parent && element != bestMatchElement) {
           elementsWithSameParent.add(element);
         }
       }
