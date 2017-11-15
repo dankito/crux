@@ -23,7 +23,9 @@ public class Log {
   }
 
   public static void printAndRemove(Node node, String reason) {
-    i(reason, node);
-    node.remove();
+    if(node.parent() != null) {
+      i(reason, node);
+      node.remove();
+    }
   }
 }
