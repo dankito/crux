@@ -55,6 +55,20 @@ public class ArticleExtractor {
   public ArticleExtractor extractContent() {
     preprocessor.preprocess(document, new PreprocessorOptions());
 
+    Element bestMatchElement = getBestMatchElement();
+
+    // Extract images before post-processing, because that step may remove images.
+    if(bestMatchElement != null) {
+      article.images = ImageHelpers.extractImages(bestMatchElement);
+      article.document = PostprocessHelpers.postprocess(bestMatchElement);
+    }
+
+    article.imageUrl = StringUtils.makeAbsoluteUrl(article.url, MetadataHelpers.extractImageUrl(document, article.images));
+
+    return this;
+  }
+
+  protected Element getBestMatchElement() {
     Collection<Element> nodes = ExtractionHelpers.getNodes(document);
     int maxWeight = 0;
     Element bestMatchElement = null;
@@ -78,13 +92,7 @@ public class ArticleExtractor {
     // if a lot of high ranked elements have the same parent, then the parent is the node to use as it comprises that high ranked ones
     bestMatchElement = checkIfHighRankedElementsHaveSameParent(bestMatchElement, highRankedElements);
 
-    // Extract images before post-processing, because that step may remove images.
-    if(bestMatchElement != null) {
-      article.images = ImageHelpers.extractImages(bestMatchElement);
-      article.document = PostprocessHelpers.postprocess(bestMatchElement);
-    }
-    article.imageUrl = StringUtils.makeAbsoluteUrl(article.url, MetadataHelpers.extractImageUrl(document, article.images));
-    return this;
+    return bestMatchElement;
   }
 
   private Element checkIfHighRankedElementsHaveSameParent(Element bestMatchElement, List<Element> highRankedElements) {
