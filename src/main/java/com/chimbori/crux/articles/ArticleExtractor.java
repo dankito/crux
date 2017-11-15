@@ -54,9 +54,16 @@ public class ArticleExtractor {
 
   public ArticleExtractor extractContent() {
     Element bodyElement = document.body().clone();
-    preprocessor.preprocess(bodyElement, new PreprocessorOptions());
+    preprocessor.preprocess(bodyElement, new PreprocessorOptions(true, true, true));
 
     Element bestMatchElement = getBestMatchElement(bodyElement);
+
+    if(bestMatchElement == null || bestMatchElement.text().length() < 500) {
+      bodyElement = document.body();
+      preprocessor.preprocess(bodyElement, new PreprocessorOptions(false, true, true));
+
+      bestMatchElement = getBestMatchElement(bodyElement);
+    }
 
     // Extract images before post-processing, because that step may remove images.
     if(bestMatchElement != null) {
