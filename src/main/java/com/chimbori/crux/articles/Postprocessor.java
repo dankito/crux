@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
  * Cleans up the best-match Element after one has been picked, in order to provide a sanitized
  * output tree to the caller.
  */
-class PostprocessHelpers {
+public class Postprocessor {
   /**
    * If a string is shorter than this limit, it is not considered a paragraph.
    */
