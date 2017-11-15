@@ -33,9 +33,10 @@ public class Preprocessor {
    * candidates, so exercise caution when enabling this.
    */
   protected void stripUnlikelyCandidates(Element element) {
-    for (Element child : element.select("*")) {
+    for(Element child : element.select("*")) {
       String classNameAndId = child.className().toLowerCase() + " " + child.id().toLowerCase();
-      if (ExtractionHelpers.NEGATIVE_CSS_CLASSES_AND_IDS.matcher(classNameAndId).find()) {
+      if(ExtractionHelpers.NEGATIVE_CSS_CLASSES_AND_IDS.matcher(classNameAndId).find() &&
+          ExtractionHelpers.POSITIVE_CSS_CLASSES_AND_IDS.matcher(classNameAndId).find() == false) {
         Log.printAndRemove(child, "stripUnlikelyCandidates");
       }
     }
