@@ -1,5 +1,6 @@
 package com.chimbori.crux.articles;
 
+import com.chimbori.crux.articles.model.PreprocessorOptions;
 import com.chimbori.crux.common.Log;
 
 import org.jsoup.nodes.Document;
@@ -11,11 +12,21 @@ import org.jsoup.select.Elements;
  * Performs basic sanitization before starting the extraction process.
  */
 class PreprocessHelpers {
-  static void preprocess(Document doc) {
+
+  static void preprocess(Document doc, PreprocessorOptions options) {
     Log.i("preprocess");
-    stripUnlikelyCandidates(doc);
-    removeScriptsStylesForms(doc);
-    removeComments(doc.body());
+
+    if(options.isStripUnlikelyCandidates()) {
+      stripUnlikelyCandidates(doc);
+    }
+
+    if(options.isRemoveScriptsStylesForms()) {
+      removeScriptsStylesForms(doc);
+    }
+
+    if(options.isRemoveComments()) {
+      removeComments(doc.body());
+    }
   }
 
   /**
@@ -23,10 +34,6 @@ class PreprocessHelpers {
    * candidates, so exercise caution when enabling this.
    */
   private static void stripUnlikelyCandidates(Document doc) {
-    if (true) {
-      return;  // Temporarily disabled; see comment above.
-    }
-
     for (Element child : doc.select("body").select("*")) {
       String classNameAndId = child.className().toLowerCase() + " " + child.id().toLowerCase();
       if (ExtractionHelpers.NEGATIVE_CSS_CLASSES_AND_IDS.matcher(classNameAndId).find()) {

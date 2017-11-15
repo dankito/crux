@@ -1,5 +1,6 @@
 package com.chimbori.crux.articles;
 
+import com.chimbori.crux.articles.model.PreprocessorOptions;
 import com.chimbori.crux.common.StringUtils;
 
 import org.jsoup.Jsoup;
@@ -49,7 +50,7 @@ public class ArticleExtractor {
   }
 
   public ArticleExtractor extractContent() {
-    PreprocessHelpers.preprocess(document);
+    PreprocessHelpers.preprocess(document, new PreprocessorOptions());
 
     Collection<Element> nodes = ExtractionHelpers.getNodes(document);
     int maxWeight = 0;
