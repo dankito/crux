@@ -28,7 +28,7 @@ class PostprocessHelpers {
 
   private static final Pattern UNLIKELY_CSS_STYLES = Pattern.compile("display\\:none|visibility\\:hidden");
 
-  private static final Pattern UNLIKELY_CLASS_NAMES = Pattern.compile("edit-page|mw-editsection");
+  private static final Pattern UNLIKELY_CLASS_NAMES = Pattern.compile("edit-page|mw-editsection|share");
 
   /**
    * Tags that should not be output, but still may contain interesting content.
