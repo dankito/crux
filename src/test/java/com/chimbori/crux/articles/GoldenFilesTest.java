@@ -23,7 +23,7 @@ public class GoldenFilesTest {
     Article article = extractFromTestFile("http://www.npr.org/blogs/money/2010/10/04/130329523/how-fake-money-saved-brazil", "npr.html");
     assertEquals("How Fake Money Saved Brazil : Planet Money : NPR", article.title);
     assertEquals("", article.siteName);
-    assertStartsWith("This is a story about how an economist and his buddies tricked the people of Brazil into saving the country from rampant inflation. They had a crazy, unlikely plan, and it worked. Twenty years ago, Brazil's", article.document.text());
+    assertStartsWith("Listen to the Story Add to Playlist Transcript This is a story about how an economist and his buddies tricked the people of Brazil into saving the country from rampant inflation. They had a crazy, unlikely plan, and it worked. Twenty years ago, Brazil's", article.document.text());
     assertTrue(article.document.text(), article.document.text().endsWith("\"How Four Drinking Buddies Saved Brazil.\""));
     assertEquals("http://media.npr.org/assets/img/2010/10/04/real_wide.jpg?t=1286218782&s=3", article.imageUrl);
     assertTrue(article.keywords.isEmpty());
@@ -57,7 +57,7 @@ public class GoldenFilesTest {
   @Test
   public void testKhaamaPress() {
     Article article = extractFromTestFile("http://www.khaama.com/over-100-school-girls-poisoned-in-western-afghanistan-0737", "khaama.html");
-    assertStartsWith("Over 100 school girls have been poisoned in western Farah province of Afghanistan during the school hours.", article.document.text());
+    assertStartsWith("688 views  Email  Print Over 100 school girls have been poisoned in western Farah province of Afghanistan during the school hours.", article.document.text());
   }
 
   @Test
@@ -415,7 +415,7 @@ public class GoldenFilesTest {
   @Test
   public void testEconomist() {
     Article article = extractFromTestFile("http://www.economist.com/node/17956885", "economist.html");
-    assertStartsWith("FOR beleaguered smokers, the world is an increasingly", article.document.text());
+    assertStartsWith("The mirror cracked from side to side FOR beleaguered smokers, the world is an increasingly", article.document.text());
     assertEquals("http://www.economist.com/sites/default/files/images/articles/migrated/20110122_stp004.jpg", article.imageUrl);
   }
 
@@ -547,7 +547,7 @@ public class GoldenFilesTest {
   @Test
   public void testBoingBoing() {
     Article article = extractFromTestFile("http://www.boingboing.net/2010/08/18/dr-laura-criticism-o.html", "boingboing.html");
-    assertStartsWith("Dr. Laura: criticism of me infringes my first amendment rights From the Boing Boing Shop Popular Posts Follow Us Twitter / Facebook / RSS Dr. Laura Schlessinger is leaving radio to regain her \"first amendment\" rights on the internet.", article.document.text());
+    assertStartsWith("Dr. Laura: criticism of me infringes my first amendment rights Dr. Laura Schlessinger is leaving radio to regain her \"first amendment\" rights on the internet.", article.document.text());
   }
 
   @Test
