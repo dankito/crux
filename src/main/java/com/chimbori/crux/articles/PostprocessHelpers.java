@@ -176,14 +176,14 @@ class PostprocessHelpers {
     Elements elementsWithGravityScore = topNode.select(ExtractionHelpers.GRAVITY_SCORE_SELECTOR);
     for (Element element : elementsWithGravityScore) {
       int score = Integer.parseInt(element.attr(ExtractionHelpers.GRAVITY_SCORE_ATTRIBUTE));
-      if (score < 0 || (element.text().length() < MIN_LENGTH_FOR_PARAGRAPHS && isHeading(element) == false && containsImage(element) == false)) { // keep headings and images
+      if (score < 0 || (element.text().length() < MIN_LENGTH_FOR_PARAGRAPHS && containsHeading(element) == false && containsImage(element) == false)) { // keep headings and images
         Log.printAndRemove(element, "removeNodesWithNegativeScores");
       }
     }
   }
 
-  private static boolean isHeading(Element element) {
-    return element.tagName().toLowerCase().startsWith("h") && element.tagName().length() == 2;
+  private static boolean containsHeading(Element element) {
+    return element.select("h1, h2, h3, h4, h5, h5").size() > 0;
   }
 
   private static boolean containsImage(Element element) {
