@@ -77,16 +77,13 @@ public class ArticleExtractor {
 
     for (Element element : nodes) {
       int currentWeight = ExtractionHelpers.getWeight(element);
-      if(currentWeight > 50) {
+      if(currentWeight >= 50) {
         highRankedElements.add(element);
       }
 
-      if (currentWeight > maxWeight) {
+      if (currentWeight > maxWeight && maxWeight < 200) { // do not stop on maxWeight > 200 as then not all high ranked elements would get added to highRankedElements
         maxWeight = currentWeight;
-        bestMatchElement = element;
-        if (maxWeight > 200) {
-          break;
-        }
+          bestMatchElement = element;
       }
     }
 
