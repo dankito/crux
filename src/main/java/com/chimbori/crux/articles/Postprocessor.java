@@ -71,7 +71,8 @@ public class Postprocessor {
       "p", "h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "li"
   ));
 
-  static Document postprocess(Element topNode) {
+
+  public Document postprocess(Element topNode) {
     Log.i("postprocess");
     Document doc = new Document("");
     if (topNode == null) {
@@ -94,7 +95,7 @@ public class Postprocessor {
     return doc;
   }
 
-  private static void replaceLineBreaksWithSpaces(Element topNode) {
+  protected void replaceLineBreaksWithSpaces(Element topNode) {
     for (Element brNextToBrElement : topNode.select("br + br")) {
       brNextToBrElement.remove();
     }
@@ -108,7 +109,7 @@ public class Postprocessor {
     }
   }
 
-  private static void removeTopLevelTagsNotLikelyToBeParagraphs(Element element) {
+  protected void removeTopLevelTagsNotLikelyToBeParagraphs(Element element) {
     for (Element childElement : element.children()) {
       if (!RETAIN_TAGS_TOP_LEVEL.contains(childElement.tagName())) {
         Log.printAndRemove(childElement, "removeTopLevelTagsNotLikelyToBeParagraphs");
@@ -116,7 +117,7 @@ public class Postprocessor {
     }
   }
 
-  private static void removeTagsNotLikelyToBeParagraphs(Element element) {
+  protected void removeTagsNotLikelyToBeParagraphs(Element element) {
     for (Element childElement : element.children()) {
       if (!RETAIN_TAGS.contains(childElement.tagName())) {
         Log.printAndRemove(childElement, "removeTagsNotLikelyToBeParagraphs");
@@ -126,7 +127,7 @@ public class Postprocessor {
     }
   }
 
-  private static void removeTagsButRetainContent(Element element) {
+  protected void removeTagsButRetainContent(Element element) {
     for (Element childElement : element.children()) {
       removeTagsButRetainContent(childElement);
       if (REMOVE_TAGS_BUT_RETAIN_CONTENT.contains(childElement.tagName())) {
@@ -136,7 +137,7 @@ public class Postprocessor {
     }
   }
 
-  private static void removeShortParagraphs(Element topNode) {
+  protected void removeShortParagraphs(Element topNode) {
     for (int i = topNode.childNodeSize() - 1; i >= 0; i--) {
       Node childNode = topNode.childNode(i);
 
@@ -162,7 +163,7 @@ public class Postprocessor {
     }
   }
 
-  private static boolean shouldKeepShortParagraph(Node node) {
+  protected boolean shouldKeepShortParagraph(Node node) {
     if(node instanceof Element) {
       Element childElement = (Element) node;
       if(ExtractionHelpers.POSITIVE_CSS_CLASSES_AND_IDS.matcher(childElement.className() + " " + childElement.id()).find() &&
@@ -175,7 +176,7 @@ public class Postprocessor {
     return false;
   }
 
-  private static void removeUnlikelyChildNodes(Element element) {
+  protected void removeUnlikelyChildNodes(Element element) {
     for (Element childElement : element.children()) {
       if (isUnlikely(childElement)) {
         Log.printAndRemove(childElement, "removeUnlikelyChildNodes");
@@ -185,7 +186,7 @@ public class Postprocessor {
     }
   }
 
-  static private void removeNodesWithNegativeScores(Element topNode) {
+  protected void removeNodesWithNegativeScores(Element topNode) {
     Elements elementsWithGravityScore = topNode.select(ExtractionHelpers.GRAVITY_SCORE_SELECTOR);
     for (Element element : elementsWithGravityScore) {
       int score = Integer.parseInt(element.attr(ExtractionHelpers.GRAVITY_SCORE_ATTRIBUTE));
@@ -195,16 +196,16 @@ public class Postprocessor {
     }
   }
 
-  private static boolean shouldKeepElement(Element element) {
+  protected boolean shouldKeepElement(Element element) {
     return "td".equals(element.tagName()) || containsHeading(element) || containsImage(element) ||
             ExtractionHelpers.POSITIVE_CSS_CLASSES_AND_IDS.matcher(element.className() + " " + element.id()).find();
   }
 
-  private static boolean containsHeading(Element element) {
+  protected boolean containsHeading(Element element) {
     return element.select("h1, h2, h3, h4, h5, h5").size() > 0;
   }
 
-  private static boolean containsImage(Element element) {
+  protected boolean containsImage(Element element) {
     Element imageElement = element.select("img").first();
     if(imageElement != null) {
       return isSmallImage(imageElement) == false;
@@ -213,7 +214,7 @@ public class Postprocessor {
     return false;
   }
 
-  private static boolean isSmallImage(Element image) {
+  protected boolean isSmallImage(Element image) {
     try {
       if(image.attr("width").length() > 0) {
         int width = Integer.parseInt(image.attr("width"));
@@ -242,7 +243,7 @@ public class Postprocessor {
         || UNLIKELY_CLASS_NAMES.matcher(classAttribute).find();
   }
 
-  private static void removeDisallowedAttributes(Element node) {
+  protected void removeDisallowedAttributes(Element node) {
     for (Element childElement : node.children()) {
       removeDisallowedAttributes(childElement);
     }
@@ -255,7 +256,7 @@ public class Postprocessor {
   }
 
 
-  private static void makeUrlsAbsolute(Element element) {
+  protected void makeUrlsAbsolute(Element element) {
     for(Element hrefElement : element.select("[href]")) {
         hrefElement.attr("href", makeUrlAbsolute(hrefElement.attr("href"), element.baseUri()));
     }
@@ -266,12 +267,12 @@ public class Postprocessor {
   }
 
 
-  private static void makeImageSourceAbsolute(Element imageElement) {
+  protected void makeImageSourceAbsolute(Element imageElement) {
     String absoluteUrl = makeUrlAbsolute(imageElement.attr("src"), imageElement.baseUri());
     imageElement.attr("src", absoluteUrl);
   }
 
-  private static String makeUrlAbsolute(String url, String siteUrl) {
+  protected String makeUrlAbsolute(String url, String siteUrl) {
     String absoluteUrl = url;
 
     if(url.startsWith("//")) {
@@ -292,7 +293,7 @@ public class Postprocessor {
     return absoluteUrl;
   }
 
-  private static String tryToMakeUrlAbsolute(String relativeUrl, String siteUrl) {
+  protected String tryToMakeUrlAbsolute(String relativeUrl, String siteUrl) {
     try {
       URI relativeUri = new URI(relativeUrl);
       if(relativeUri.isAbsolute() && relativeUri.getScheme().startsWith("http") == false) {

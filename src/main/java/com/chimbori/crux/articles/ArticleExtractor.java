@@ -18,6 +18,8 @@ public class ArticleExtractor {
 
   private Preprocessor preprocessor = new Preprocessor();
 
+  private Postprocessor postprocessor = new Postprocessor();
+
 
   public ArticleExtractor(String url, String html) {
     this.url = url;
@@ -68,7 +70,7 @@ public class ArticleExtractor {
     // Extract images before post-processing, because that step may remove images.
     if(bestMatchElement != null) {
       article.images = ImageHelpers.extractImages(bestMatchElement);
-      article.document = PostprocessHelpers.postprocess(bestMatchElement);
+      article.document = postprocessor.postprocess(bestMatchElement);
     }
 
     article.imageUrl = StringUtils.makeAbsoluteUrl(article.url, MetadataHelpers.extractImageUrl(document, article.images));
