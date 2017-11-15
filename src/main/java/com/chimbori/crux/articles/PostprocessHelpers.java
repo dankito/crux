@@ -155,11 +155,24 @@ class PostprocessHelpers {
 
       if (text == null ||
           text.isEmpty() ||
-          (!isExemptFromMinTextLengthCheck && text.length() < MIN_LENGTH_FOR_PARAGRAPHS) ||
+          (!isExemptFromMinTextLengthCheck && text.length() < MIN_LENGTH_FOR_PARAGRAPHS && shouldKeepShortParagraph(childNode) == false) ||
           text.length() > StringUtils.countLetters(text) * 2) {
         Log.printAndRemove(childNode, "removeShortParagraphs:");
       }
     }
+  }
+
+  private static boolean shouldKeepShortParagraph(Node node) {
+    if(node instanceof Element) {
+      Element childElement = (Element) node;
+      if(ExtractionHelpers.POSITIVE_CSS_CLASSES_AND_IDS.matcher(childElement.className() + " " + childElement.id()).find() &&
+          ExtractionHelpers.UNLIKELY_CSS_CLASSES_AND_IDS.matcher(childElement.className() + " " + childElement.id()).find() == false &&
+          ExtractionHelpers.NEGATIVE_CSS_CLASSES_AND_IDS.matcher(childElement.className() + " " + childElement.id()).find() == false) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   private static void removeUnlikelyChildNodes(Element element) {
