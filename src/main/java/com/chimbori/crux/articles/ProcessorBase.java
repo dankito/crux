@@ -76,12 +76,6 @@ public abstract class ProcessorBase {
     }
   }
 
-
-  protected void makeImageSourceAbsolute(Element imageElement) {
-    String absoluteUrl = makeUrlAbsolute(imageElement.attr("src"), imageElement.baseUri());
-    imageElement.attr("src", absoluteUrl);
-  }
-
   protected String makeUrlAbsolute(String url, String siteUrl) {
     String absoluteUrl = url;
 
