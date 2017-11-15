@@ -21,9 +21,9 @@ class ExtractionHelpers {
   private static final Pattern IMPORTANT_NODES =
       Pattern.compile("p|div|td|h1|h2|article|section");
 
-  private static final Pattern UNLIKELY_CSS_CLASSES_AND_IDS =
+  public static final Pattern UNLIKELY_CSS_CLASSES_AND_IDS =
       Pattern.compile("banner|breadcrumbs|combx|comment|community|cover-wrap|disqus|discuss|e[-]?mail|extra|"
-          + "foot|header|legends|menu|modal|related|remark|reply|replies|rss|share|shoutbox|sidebar|skyscraper|"
+          + "foot|header|legends|menu|modal|related|remark|reply|replies|rss|share|sharing|shoutbox|sidebar|skyscraper|"
           + "social|sponsor|supplemental|ad|ad-break|all|agegate|archive|attachment|pagination|pager|popup|print|"
           + "sign|single|facebook|twitter|yom-remote");
 
@@ -34,7 +34,7 @@ class ExtractionHelpers {
   public static final Pattern NEGATIVE_CSS_CLASSES_AND_IDS =
       Pattern.compile("nav($|igation)|user|(^com-)|"
           + "hidden|^hid$| hid$| hid |^hid |banner|combx|comment|com-|contact|foot|footer|footnote|"
-          + "masthead|media|meta|modal|outbrain|promo|related|scroll|share|shoutbox|sidebar|skyscraper|"
+          + "masthead|media|meta|modal|outbrain|promo|related|scroll|share|sharing|shoutbox|sidebar|skyscraper|"
           + "sponsor|shopping|tags|tool|widget|player|disclaimer|toc|infobox|vcard|post-ratings");
 
   private static final Pattern NEGATIVE_CSS_STYLES =
