@@ -183,7 +183,7 @@ public class Postprocessor extends ProcessorBase {
   }
 
 
-  static private boolean isUnlikely(Element element) {
+  protected boolean isUnlikely(Element element) {
     String styleAttribute = element.attr("style");
     String classAttribute = element.attr("class");
     // TODO: why have captions been removed? keeping them for now.
