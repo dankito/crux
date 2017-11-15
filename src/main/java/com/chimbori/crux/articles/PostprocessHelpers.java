@@ -176,11 +176,15 @@ class PostprocessHelpers {
     Elements elementsWithGravityScore = topNode.select(ExtractionHelpers.GRAVITY_SCORE_SELECTOR);
     for (Element element : elementsWithGravityScore) {
       int score = Integer.parseInt(element.attr(ExtractionHelpers.GRAVITY_SCORE_ATTRIBUTE));
-      if (score < 0 || (element.text().length() < MIN_LENGTH_FOR_PARAGRAPHS && "td".equals(element.tagName()) == false && containsHeading(element) == false &&
-          containsImage(element) == false) && ExtractionHelpers.POSITIVE_CSS_CLASSES_AND_IDS.matcher(element.className() + " " + element.id()).find() == false) {
+      if (score < 0 || (element.text().length() < MIN_LENGTH_FOR_PARAGRAPHS && shouldKeepElement(element) == false)) {
         Log.printAndRemove(element, "removeNodesWithNegativeScores");
       }
     }
+  }
+
+  private static boolean shouldKeepElement(Element element) {
+    return "td".equals(element.tagName()) || containsHeading(element) || containsImage(element) ||
+            ExtractionHelpers.POSITIVE_CSS_CLASSES_AND_IDS.matcher(element.className() + " " + element.id()).find();
   }
 
   private static boolean containsHeading(Element element) {
