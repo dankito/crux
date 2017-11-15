@@ -27,7 +27,7 @@ class ExtractionHelpers {
           + "social|sponsor|supplemental|ad|ad-break|all|agegate|archive|attachment|pagination|pager|popup|print|"
           + "sign|single|facebook|twitter|yom-remote");
 
-  private static final Pattern POSITIVE_CSS_CLASSES_AND_IDS =
+  public static final Pattern POSITIVE_CSS_CLASSES_AND_IDS =
       Pattern.compile("(^(body|content|h?entry|main|page|post|text|blog|story|haupt))"
           + "|arti(cle|kel)|instapaper_body|h-entry|pagination");
 
@@ -106,8 +106,6 @@ class ExtractionHelpers {
         if ("h1;h2;h3;h4;h5;h6".contains(subEl.tagName())) {
           weight += 20;
           // headerEls.add(subEl);
-        } else if ("table;li;td;th".contains(subEl.tagName())) {
-          addScore(subEl, -30);
         }
 
         if ("p".contains(subEl.tagName())) {
