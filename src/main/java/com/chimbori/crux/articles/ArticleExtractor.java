@@ -81,7 +81,7 @@ public class ArticleExtractor {
         highRankedElements.add(element);
       }
 
-      if (currentWeight > maxWeight && maxWeight < 200) { // do not stop on maxWeight > 200 as then not all high ranked elements would get added to highRankedElements
+      if(currentWeight >= maxWeight && maxWeight < 200) { // do not stop on maxWeight > 200 as then not all high ranked elements would get added to highRankedElements
         int previousMaxWeight = maxWeight;
         maxWeight = currentWeight;
 
@@ -89,7 +89,7 @@ public class ArticleExtractor {
         if(bestMatchElement != null && previousMaxWeight >= 50 && (bestMatchElement.parent() == element.parent() || element.parent().children().contains(bestMatchElement.parent()))) {
           bestMatchElement = element.parent();
         }
-        else {
+        else if(currentWeight > previousMaxWeight) {
           bestMatchElement = element;
         }
       }
