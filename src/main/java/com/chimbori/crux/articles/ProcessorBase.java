@@ -16,7 +16,8 @@ public abstract class ProcessorBase {
       Element childElement = (Element) node;
       String classNameAndId = childElement.className() + " " + childElement.id();
 
-      if(ExtractionHelpers.POSITIVE_CSS_CLASSES_AND_IDS.matcher(classNameAndId).find() &&
+      if(containsImage(childElement) ||
+          ExtractionHelpers.POSITIVE_CSS_CLASSES_AND_IDS.matcher(classNameAndId).find() &&
           ExtractionHelpers.UNLIKELY_CSS_CLASSES_AND_IDS.matcher(classNameAndId).find() == false &&
           ExtractionHelpers.NEGATIVE_CSS_CLASSES_AND_IDS.matcher(classNameAndId).find() == false) {
         return true;
