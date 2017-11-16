@@ -5,8 +5,11 @@ import com.chimbori.crux.common.Log;
 
 import org.junit.Test;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -739,6 +742,10 @@ public class GoldenFilesTest {
 
       String expectedText = new String(Files.readAllBytes(Paths.get("test_data/" + testFile.replace(".html", "-expected.txt"))), StandardCharsets.UTF_8);
 
+      if(false) {
+        writeExtractionResultToFile(testFile, article);
+      }
+
       if(extractedText.equals(expectedText) == false) {
         fail(String.format("Extracted text does not match:\n\nActual:\n[%s]\n\n Expected:\n[%s]\n", extractedText, expectedText));
       }
@@ -749,6 +756,16 @@ public class GoldenFilesTest {
       fail(e.getMessage());
       return null;
     }
+  }
+
+  private void writeExtractionResultToFile(String testFile, Article article) throws IOException {
+    String extractedText = article.document.text();
+    BufferedWriter writer = new BufferedWriter(new FileWriter(new File("test_data", testFile.replace(".html", "-expected.txt"))));
+//    String extractedText = article.document.outerHtml();
+//    BufferedWriter writer = new BufferedWriter(new FileWriter(new File("test_data", testFile.replace(".html", "-expected.html"))));
+    writer.write(extractedText, 0, extractedText.length());
+    writer.flush();
+    writer.close();
   }
 
   private void assertStartsWith(String expected, String actual) {
