@@ -57,7 +57,7 @@ public class Postprocessor extends ProcessorBase {
    * will be retained.
    */
   private static final Set<String> ATTRIBUTES_TO_RETAIN_IN_HTML = new HashSet<>(Arrays.asList(
-      "href", "title", "src", "alt", "width", "height", "cellspacing", "cellpadding"
+      "href", "title", "src", "srcset", "sizes", "alt", "width", "height", "cellspacing", "cellpadding"
   ));
 
   /**

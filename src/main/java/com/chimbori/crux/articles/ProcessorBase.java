@@ -68,13 +68,43 @@ public abstract class ProcessorBase {
 
 
   protected void makeUrlsAbsolute(Element element) {
+    String baseUri = element.baseUri();
+
     for(Element hrefElement : element.select("[href]")) {
-        hrefElement.attr("href", makeUrlAbsolute(hrefElement.attr("href"), element.baseUri()));
+        hrefElement.attr("href", makeUrlAbsolute(hrefElement.attr("href"), baseUri));
     }
 
     for(Element srcElement : element.select("[src]")) {
-        srcElement.attr("src", makeUrlAbsolute(srcElement.attr("src"), element.baseUri()));
+        srcElement.attr("src", makeUrlAbsolute(srcElement.attr("src"), baseUri));
+
+      makeSourceSetUrlsAbsolute(srcElement, baseUri);
     }
+  }
+
+  protected void makeSourceSetUrlsAbsolute(Element element, String baseUri) {
+    String sourceSet = element.attr("srcset");
+    if(sourceSet.isEmpty() == false) {
+      element.attr("srcset", makeSourceSetUrlsAbsolute(sourceSet, baseUri));
+    }
+  }
+
+  protected String makeSourceSetUrlsAbsolute(String sourceSetValue, String baseUri) {
+    String[] urls = sourceSetValue.split(",");
+
+    for(int i = 0; i < urls.length; i++) {
+      urls[i] = makeUrlAbsolute(urls[i].trim(), baseUri);
+    }
+
+    String newSourceSetValue = "";
+    for(int i = 0; i < urls.length; i++) {
+      newSourceSetValue += urls[i];
+
+      if(i < urls.length - 1) {
+        newSourceSetValue += ", ";
+      }
+    }
+
+    return newSourceSetValue;
   }
 
   protected String makeUrlAbsolute(String url, String siteUrl) {
