@@ -153,10 +153,11 @@ public class Postprocessor extends ProcessorBase {
 
       Log.i("removeShortParagraphs: [%s] isExemptFromMinTextLengthCheck : %b", childNode, isExemptFromMinTextLengthCheck);
 
-      if (text == null ||
+      if (shouldKeepShortParagraph(childNode) == false &&
+          (text == null ||
           text.isEmpty() ||
-          (!isExemptFromMinTextLengthCheck && text.length() < MIN_LENGTH_FOR_PARAGRAPHS && shouldKeepShortParagraph(childNode) == false) ||
-          text.length() > StringUtils.countLetters(text) * 2) {
+          (!isExemptFromMinTextLengthCheck && text.length() < MIN_LENGTH_FOR_PARAGRAPHS) ||
+          text.length() > StringUtils.countLetters(text) * 2)) {
         Log.printAndRemove(childNode, "removeShortParagraphs:");
       }
     }
