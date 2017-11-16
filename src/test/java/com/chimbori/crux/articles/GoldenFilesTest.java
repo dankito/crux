@@ -704,6 +704,30 @@ public class GoldenFilesTest {
     assertContains("Zweitens: Ein Staat, der selbst in Steueroasen agiert, sendet - auch wenn alles legal ist - unweigerlich ein Signal: dass Geschäfte in Steueroasen doch gar nicht so problematisch seien.", article.document.text());
   }
 
+  @Test
+  public void testViget() {
+    Article article = extractFromTestFile("https://www.viget.com/articles/color-contrast", "viget.html");
+    assertEquals("Color Contrast for Better Readability", article.title);
+    assertEquals("https://static.viget.com/color-contrast-thumb.gif?mtime=20160401092739", article.imageUrl);
+    assertEquals(12, article.images.size());
+    assertStartsWith("When you create color palettes for your web design projects", article.document.text());
+    assertContains("I should mention that I’m far from an accessibility expert. My goal here is to simply show", article.document.text());
+    assertContains("While you can use color contrast tools to help you establish a color palette, you can also use the tools to help find good options", article.document.text());
+    assertContains("There are plenty of good color contrast testing tools available on the web.", article.document.text());
+    assertContains("First, it's helpful to establish good body text values. I usually start with a neutral color palette and aim for the lightest gray with a AAA", article.document.text());
+    assertContains("The next step is to find a good color option for buttons and links (the actions). I take a slightly different approach here. Instead of going for AAA,", article.document.text());
+    assertContains("The blues and reds have a higher success rate while the yellows and greens not so much.", article.document.text());
+    assertContains("5. Establish various color combinations", article.document.text());
+    assertContains("It’s good to identify some additional color combinations for attention-grabbing call-outs and other possible needs.", article.document.text());
+    assertContains("6. Document in your style guide", article.document.text());
+    assertContains("The last step is to keep a reference guide handy with your test results while adding notes to your style guide.", article.document.text());
+    assertContains("Summary", article.document.text());
+    assertContains("That's really all there is to it, but you could break this down into three even simpler chunks if you like:", article.document.text());
+    assertContains("Action Links: For links, explore colors that are both luminous and high contrast to make it clear where actions are. (If you've done this right, there will be some contrast between your reading text and action links.)", article.document.text());
+    assertContains("Extra, Extra!: Create and document various color combinations for call-outs intended to draw extra attention.", article.document.text());
+  }
+
+
   private Article extractFromTestFile(String baseUri, String testFile) {
     try {
       Article article = ArticleExtractor.with(baseUri,
