@@ -60,7 +60,7 @@ public class GoldenFilesTest {
   @Test
   public void testKhaamaPress() {
     Article article = extractFromTestFile("http://www.khaama.com/over-100-school-girls-poisoned-in-western-afghanistan-0737", "khaama.html");
-    assertStartsWith("688 views  Email  Print Over 100 school girls have been poisoned in western Farah province of Afghanistan during the school hours.", article.document.text());
+    assertStartsWith("By Khaama Press - Sat Apr 23 2016, 10:55 am 688 views  Email  Print Over 100 school girls have been poisoned in western Farah province of Afghanistan during the school hours.", article.document.text());
   }
 
   @Test
@@ -550,7 +550,7 @@ public class GoldenFilesTest {
   @Test
   public void testBoingBoing() {
     Article article = extractFromTestFile("http://www.boingboing.net/2010/08/18/dr-laura-criticism-o.html", "boingboing.html");
-    assertStartsWith("Dr. Laura: criticism of me infringes my first amendment rights Dr. Laura Schlessinger is leaving radio to regain her \"first amendment\" rights on the internet.", article.document.text());
+    assertStartsWith("/ Rob Beschizza / 7:57 am Wed Dr. Laura: criticism of me infringes my first amendment rights Dr. Laura Schlessinger is leaving radio to regain her \"first amendment\" rights on the internet.", article.document.text());
   }
 
   @Test
@@ -638,7 +638,7 @@ public class GoldenFilesTest {
   @Test
   public void testNature() {
     Article article = extractFromTestFile("http://www.nature.com/news/2011/110411/full/472146a.html", "nature.html");
-    assertStartsWith("As the immediate threat from Fukushima Daiichi's damaged nuclear reactors recedes, engineers and scientists are", article.document.text());
+    assertStartsWith("Online collection As the immediate threat from Fukushima Daiichi's damaged nuclear reactors recedes, engineers and scientists are", article.document.text());
   }
 
   @Test
@@ -685,7 +685,7 @@ public class GoldenFilesTest {
   public void testRetractionWatch() {
     Article article = extractFromTestFile("http://retractionwatch.com/2017/04/26/troubling-new-way-evade-plagiarism-detection-software-tell-used/", "retraction_watch.html");
     assertEquals("A troubling new way to evade plagiarism detection software. (And how to tell if it's been used.) - Retraction Watch at Retraction Watch", article.title);
-    assertStartsWith("Recently, at the end of a tutorial, a student asked Ann Rogerson a question she’d never heard before: Was it okay to use paraphrasing tools to write up assignments?", article.document.text());
+    assertStartsWith("Ann Rogerson Recently, at the end of a tutorial, a student asked Ann Rogerson a question she’d never heard before: Was it okay to use paraphrasing tools to write up assignments?", article.document.text());
     assertContains("I had my answer about what the student in the previous session had done.", article.document.text());
     assertContains("…however I have no experience or evidence whether professional academics are using the tools for their scholarly publishing.", article.document.text());
     assertContains("SIDEBAR: How to identify text modified by a paraphrasing tool", article.document.text());
