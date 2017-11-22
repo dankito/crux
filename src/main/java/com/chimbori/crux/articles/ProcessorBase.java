@@ -33,7 +33,7 @@ public abstract class ProcessorBase {
   }
 
   protected boolean containsHeading(Element element) {
-    return element.select("h1, h2, h3, h4, h5, h5").size() > 0;
+    return element.select("h1, h2, h3, h4, h5, h6").size() > 0;
   }
 
   protected boolean containsImage(Element element) {
