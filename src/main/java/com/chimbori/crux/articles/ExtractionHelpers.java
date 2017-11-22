@@ -28,8 +28,8 @@ class ExtractionHelpers {
           + "sign|single|facebook|twitter|yom-remote");
 
   public static final Pattern POSITIVE_CSS_CLASSES_AND_IDS =
-      Pattern.compile("(^(body|content|h?entry|main|page|post|text|blog|story|haupt))"
-          + "|arti(cle|kel)|instapaper_body|h-entry|pagination");
+      Pattern.compile("body|content|h?entry|h-entry|main|page|post|text|blog|story|haupt"
+          + "|arti(cle|kel)|instapaper_body|pagination");
 
   public static final Pattern NEGATIVE_CSS_CLASSES_AND_IDS =
       Pattern.compile("nav($|igation)|user|(^com-)|"
